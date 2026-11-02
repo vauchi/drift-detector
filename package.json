@@ -1,0 +1,69 @@
+{
+  "name": "@megloff1/drift-detector",
+  "version": "0.1.0",
+  "description": "Cross-layer coherence tool for detecting drift between problem statements, features, tests, code, and documentation",
+  "type": "module",
+  "main": "dist/index.js",
+  "bin": {
+    "drift-detector": "./dist/index.js"
+  },
+  "files": [
+    "dist",
+    "queries",
+    "README.md"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "start": "node dist/index.js",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:coverage": "vitest run --coverage",
+    "lint": "eslint src tests --ext .ts",
+    "fmt": "prettier --write 'src/**/*.ts' 'tests/**/*.ts'",
+    "check": "npm run lint && npm run test"
+  },
+  "keywords": [
+    "mcp",
+    "drift-detection",
+    "coherence",
+    "testing",
+    "documentation",
+    "traceability"
+  ],
+  "author": "Mattia Egloff <mattia.egloff@pm.me>",
+  "license": "GPL-3.0-or-later",
+  "dependencies": {
+    "@cucumber/gherkin": "^29.0.0",
+    "@cucumber/messages": "^26.0.0",
+    "@modelcontextprotocol/sdk": "^1.12.0",
+    "better-sqlite3": "^12.11.1",
+    "fast-glob": "^3.3.3",
+    "minimatch": "^9.0.5",
+    "remark-parse": "^11.0.0",
+    "smol-toml": "^1.6.0",
+    "string-similarity": "^4.0.4",
+    "unified": "^11.0.5",
+    "web-tree-sitter": "^0.24.7",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/node": "^22.13.4",
+    "@types/string-similarity": "^4.0.2",
+    "@typescript-eslint/eslint-plugin": "^8.24.0",
+    "@typescript-eslint/parser": "^8.24.0",
+    "@vitest/coverage-v8": "^3.0.5",
+    "eslint": "^9.20.1",
+    "fast-check": "^4.6.0",
+    "prettier": "^3.5.1",
+    "typescript": "^5.7.3",
+    "vitest": "^3.0.5"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "allowScripts": {
+    "better-sqlite3@12.11.1": true
+  }
+}

@@ -1,0 +1,15 @@
+Format: https://www.debian.org/doc/packaging-manuals/copyright-format/1.0/
+Upstream-Name: drift-detector
+Upstream-Contact: Mattia Egloff <mattia.egloff@pm.me>
+
+Files: .gitignore .mcp.json.example .nvmrc package.json package-lock.json tsconfig.json vitest.config.ts
+Copyright: 2026 Mattia Egloff <mattia.egloff@pm.me>
+License: GPL-3.0-or-later
+
+Files: README.md
+Copyright: 2026 Mattia Egloff <mattia.egloff@pm.me>
+License: GPL-3.0-or-later
+
+Files: scripts/*.ts
+Copyright: 2026 Mattia Egloff <mattia.egloff@pm.me>
+License: GPL-3.0-or-later

@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "drift-detector": {
+      "command": "npx",
+      "args": ["-y", "@megloff1/drift-detector"]
+    }
+  }
+}
