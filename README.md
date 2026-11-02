@@ -1,10 +1,13 @@
 # drift-detector
 
-Cross-layer coherence tool for detecting drift between problem statements, features, tests, code, and documentation.
+Cross-layer coherence tool for detecting drift between problem statements,
+features, tests, code, and documentation.
 
 ## What it does
 
-drift-detector indexes every layer of a software project — problem statements, Gherkin features, tests, source code, and documentation — then cross-references them to detect:
+drift-detector indexes every layer of a software project — problem
+statements, Gherkin features, tests, source code, and documentation — then
+cross-references them to detect:
 
 - **Missing test coverage**: Features without corresponding tests
 - **Undocumented code**: Public APIs without documentation
@@ -51,7 +54,7 @@ claude mcp add --transport stdio drift-detector -- npx -y @megloff1/drift-detect
 
 Rebuild the project index. Run this on first setup or after major changes.
 
-```
+```text
 Parameters:
 - full (boolean, default: false): If true, drops and rebuilds entire index
 ```
@@ -60,7 +63,7 @@ Parameters:
 
 Look up a concept across all project layers.
 
-```
+```text
 Parameters:
 - concept (string, required): The concept name to look up
 - include_code (boolean, default: true): Include code snippets in response
@@ -70,7 +73,7 @@ Parameters:
 
 Scan for inconsistencies across layers.
 
-```
+```text
 Parameters:
 - scope (enum: all|features|tests|docs|code, default: all)
 - severity (enum: all|high|medium|low, default: all)
@@ -82,7 +85,7 @@ Parameters:
 
 Show which concepts are covered at each layer.
 
-```
+```text
 Parameters:
 - filter (enum: all|undocumented|untested|unimplemented, default: all)
 - component (string, optional): Filter to specific component
@@ -92,7 +95,7 @@ Parameters:
 
 Search across all indexed entities.
 
-```
+```text
 Parameters:
 - query (string, required): Search query
 - layer (enum: all|feature|test|source|doc, default: all)
@@ -139,11 +142,15 @@ aliases = ["auth", "login", "signin"]
 
 ## Semantic Matching
 
-drift-detector uses embedding-based semantic matching to reduce false positives and enable self-healing tag overrides.
+drift-detector uses embedding-based semantic matching to reduce false
+positives and enable self-healing tag overrides.
 
 ### Self-healing tag override
 
-`@planned` scenarios with implementation evidence (from any matching phase — tags, names, paths, or semantic embeddings) are reported as `stale_tag` LOW rather than silently skipped. This surfaces stale tags without manual `@implemented` sweeps.
+`@planned` scenarios with implementation evidence (from any matching
+phase — tags, names, paths, or semantic embeddings) are reported as
+`stale_tag` LOW rather than silently skipped. This surfaces stale tags
+without manual `@implemented` sweeps.
 
 ### Ollama setup
 
