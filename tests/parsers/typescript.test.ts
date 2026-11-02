@@ -559,9 +559,7 @@ describe("Identity", () => {});`;
       const code = `// @scenario: anonymous_sender :: Sender ID derived from shared key
 describe("AnonymousSender", () => {});`;
       const result = parser.parseFile("/tests/anon.test.ts", code);
-      const fn = result.entities.find(
-        (e) => e.name === "AnonymousSender",
-      );
+      const fn = result.entities.find((e) => e.name === "AnonymousSender");
       expect(fn).toBeDefined();
 
       const annotations = fn!.metadata.scenarioAnnotations as Array<{
@@ -570,9 +568,7 @@ describe("AnonymousSender", () => {});`;
       }>;
       expect(annotations).toHaveLength(1);
       expect(annotations[0].feature).toBe("anonymous_sender");
-      expect(annotations[0].scenario).toBe(
-        "Sender ID derived from shared key",
-      );
+      expect(annotations[0].scenario).toBe("Sender ID derived from shared key");
     });
   });
 });

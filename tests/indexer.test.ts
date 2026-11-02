@@ -940,10 +940,14 @@ mod tests {
     it("creates semantic edges for entities unmatched by name/tag", async () => {
       // Mock embedder: returns similar vectors for related concepts
       const mockEmbedder: EmbeddingProvider = {
-        async isAvailable() { return true; },
+        async isAvailable() {
+          return true;
+        },
         async embed(text: string) {
-          if (text.includes("shred") || text.includes("destruction")) return [0.9, 0.1, 0.0];
-          if (text.includes("theme") || text.includes("color")) return [0.0, 0.0, 1.0];
+          if (text.includes("shred") || text.includes("destruction"))
+            return [0.9, 0.1, 0.0];
+          if (text.includes("theme") || text.includes("color"))
+            return [0.0, 0.0, 1.0];
           return [0.5, 0.5, 0.0];
         },
       };
@@ -952,7 +956,11 @@ mod tests {
       const semanticIndexer = new Indexer(db, testConfig(), mockEmbedder);
 
       // Create a scenario about data destruction (no matching tags or names to source)
-      const featureFileId = db.insertFile("/features/shredding.feature", "fhash", "gherkin");
+      const featureFileId = db.insertFile(
+        "/features/shredding.feature",
+        "fhash",
+        "gherkin",
+      );
       db.insertEntity(featureFileId, {
         name: "User shreds contact data",
         entityType: "scenario",
@@ -964,7 +972,11 @@ mod tests {
       });
 
       // Create a source entity with related semantics but different name
-      const sourceFileId = db.insertFile("/src/destruction.rs", "shash", "rust");
+      const sourceFileId = db.insertFile(
+        "/src/destruction.rs",
+        "shash",
+        "rust",
+      );
       db.insertEntity(sourceFileId, {
         name: "secure_destruction_wipe",
         entityType: "function",
@@ -990,32 +1002,49 @@ mod tests {
       await semanticIndexer.buildEdges();
 
       // Should have semantic edges between shred scenario and destruction source
-      const scenario = db.getAllEntities().find((e) => e.name === "User shreds contact data");
+      const scenario = db
+        .getAllEntities()
+        .find((e) => e.name === "User shreds contact data");
       expect(scenario).toBeDefined();
 
       const scenarioEdges = db.getEdgesBySourceId(scenario!.id);
       const implementedByEdge = scenarioEdges.find(
-        (e) => e.edge_type === "implemented_by" && e.match_method === "semantic",
+        (e) =>
+          e.edge_type === "implemented_by" && e.match_method === "semantic",
       );
       expect(implementedByEdge).toBeDefined();
       expect(implementedByEdge!.confidence).toBeGreaterThanOrEqual(0.5);
       expect(implementedByEdge!.confidence).toBeLessThanOrEqual(0.95);
 
       // Verify the matching source is the destruction one, not the theme one
-      const destructionSource = db.getAllEntities().find((e) => e.name === "secure_destruction_wipe");
+      const destructionSource = db
+        .getAllEntities()
+        .find((e) => e.name === "secure_destruction_wipe");
       expect(implementedByEdge!.target_id).toBe(destructionSource!.id);
     });
 
     it("skips semantic phase when embedder unavailable", async () => {
       const unavailableEmbedder: EmbeddingProvider = {
-        async isAvailable() { return false; },
-        async embed() { throw new Error("should not be called"); },
+        async isAvailable() {
+          return false;
+        },
+        async embed() {
+          throw new Error("should not be called");
+        },
       };
 
-      const semanticIndexer = new Indexer(db, testConfig(), unavailableEmbedder);
+      const semanticIndexer = new Indexer(
+        db,
+        testConfig(),
+        unavailableEmbedder,
+      );
 
       // Create unmatched feature + source
-      const featureFileId = db.insertFile("/features/test.feature", "fhash", "gherkin");
+      const featureFileId = db.insertFile(
+        "/features/test.feature",
+        "fhash",
+        "gherkin",
+      );
       db.insertEntity(featureFileId, {
         name: "Some scenario",
         entityType: "scenario",
@@ -1051,7 +1080,11 @@ mod tests {
       // Indexer without embedder parameter (default behavior)
       const plainIndexer = new Indexer(db, testConfig());
 
-      const featureFileId = db.insertFile("/features/test.feature", "fhash", "gherkin");
+      const featureFileId = db.insertFile(
+        "/features/test.feature",
+        "fhash",
+        "gherkin",
+      );
       db.insertEntity(featureFileId, {
         name: "Some scenario",
         entityType: "scenario",
@@ -1080,14 +1113,22 @@ mod tests {
 
     it("does not create semantic edges for features already matched", async () => {
       const mockEmbedder: EmbeddingProvider = {
-        async isAvailable() { return true; },
-        async embed() { return [0.9, 0.1, 0.0]; },
+        async isAvailable() {
+          return true;
+        },
+        async embed() {
+          return [0.9, 0.1, 0.0];
+        },
       };
 
       const semanticIndexer = new Indexer(db, testConfig(), mockEmbedder);
 
       // Create a scenario with a tag matching a source
-      const featureFileId = db.insertFile("/features/auth.feature", "fhash", "gherkin");
+      const featureFileId = db.insertFile(
+        "/features/auth.feature",
+        "fhash",
+        "gherkin",
+      );
       db.insertEntity(featureFileId, {
         name: "User logs in",
         entityType: "scenario",
@@ -1112,7 +1153,9 @@ mod tests {
       await semanticIndexer.buildEdges();
 
       // The feature should have been matched by tag (Phase 1), not semantic
-      const scenario = db.getAllEntities().find((e) => e.name === "User logs in");
+      const scenario = db
+        .getAllEntities()
+        .find((e) => e.name === "User logs in");
       const edges = db.getEdgesBySourceId(scenario!.id);
       const semanticEdges = edges.filter((e) => e.match_method === "semantic");
       expect(semanticEdges).toHaveLength(0);

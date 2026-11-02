@@ -397,9 +397,7 @@ fn test_compute_deterministic() {
       }>;
       expect(annotations).toHaveLength(1);
       expect(annotations[0].feature).toBe("anonymous_sender");
-      expect(annotations[0].scenario).toBe(
-        "Sender ID derived from shared key",
-      );
+      expect(annotations[0].scenario).toBe("Sender ID derived from shared key");
     });
 
     it("should preserve annotations across comment lines between @scenario and #[test]", () => {
@@ -433,9 +431,7 @@ fn test_full_exchange() {
     assert!(true);
 }`;
       const result = parser.parseFile("/tests/exchange.rs", code);
-      const fn = result.entities.find(
-        (e) => e.name === "test_full_exchange",
-      );
+      const fn = result.entities.find((e) => e.name === "test_full_exchange");
       const annotations = fn!.metadata.scenarioAnnotations as Array<{
         feature: string;
         scenario: string;
@@ -452,9 +448,7 @@ fn test_no_annotation() {
     assert!(true);
 }`;
       const result = parser.parseFile("/tests/exchange.rs", code);
-      const fn = result.entities.find(
-        (e) => e.name === "test_no_annotation",
-      );
+      const fn = result.entities.find((e) => e.name === "test_no_annotation");
       expect(fn!.metadata.scenarioAnnotations).toBeUndefined();
     });
   });

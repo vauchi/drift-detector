@@ -97,13 +97,19 @@ describe("buildChangeset", () => {
 
     expect(changeset.planUpdates).toHaveLength(2);
     expect(changeset.planUpdates[0]).toEqual({
-      file: join(tempRoot, "_private/docs/planning/todo/2026-01-01-my-feature.plan.md"),
+      file: join(
+        tempRoot,
+        "_private/docs/planning/todo/2026-01-01-my-feature.plan.md",
+      ),
       taskNumber: 1,
       source: "trailer",
       confidence: "explicit",
     });
     expect(changeset.planUpdates[1]).toEqual({
-      file: join(tempRoot, "_private/docs/planning/todo/2026-01-01-my-feature.plan.md"),
+      file: join(
+        tempRoot,
+        "_private/docs/planning/todo/2026-01-01-my-feature.plan.md",
+      ),
       taskNumber: 2,
       source: "trailer",
       confidence: "explicit",

@@ -372,7 +372,11 @@ export class RustParser implements LayerParser {
 
       // Skip other attribute lines and comments — preserve accumulated state
       const trimmed = line.trim();
-      if (trimmed.startsWith("#[") || trimmed.startsWith("//") || trimmed === "") {
+      if (
+        trimmed.startsWith("#[") ||
+        trimmed.startsWith("//") ||
+        trimmed === ""
+      ) {
         continue;
       }
 

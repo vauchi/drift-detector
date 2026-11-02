@@ -82,10 +82,9 @@ describe("OllamaEmbeddingProvider", () => {
       _init?: RequestInit,
     ) => {
       fetchCount++;
-      return new Response(
-        JSON.stringify({ embeddings: [embedding] }),
-        { status: 200 },
-      );
+      return new Response(JSON.stringify({ embeddings: [embedding] }), {
+        status: 200,
+      });
     };
 
     const provider = new OllamaEmbeddingProvider(
@@ -169,10 +168,9 @@ describe("OllamaEmbeddingProvider", () => {
       init?: RequestInit,
     ) => {
       capturedBody = init?.body as string;
-      return new Response(
-        JSON.stringify({ embeddings: [[0.1]] }),
-        { status: 200 },
-      );
+      return new Response(JSON.stringify({ embeddings: [[0.1]] }), {
+        status: 200,
+      });
     };
 
     const provider = new OllamaEmbeddingProvider(
@@ -183,7 +181,10 @@ describe("OllamaEmbeddingProvider", () => {
 
     await provider.embed("test input");
     const parsed = JSON.parse(capturedBody!);
-    expect(parsed).toEqual({ model: "qwen3-embedding:0.6B", input: "test input" });
+    expect(parsed).toEqual({
+      model: "qwen3-embedding:0.6B",
+      input: "test input",
+    });
   });
 });
 
@@ -212,13 +213,17 @@ describe("buildEntityText", () => {
   it("handles missing metadata gracefully", () => {
     const entity = makeEntity({ metadata: "{}" });
     const text = buildEntityText(entity);
-    expect(text).toBe("create_identity | pub fn create_identity(name: &str) -> Identity");
+    expect(text).toBe(
+      "create_identity | pub fn create_identity(name: &str) -> Identity",
+    );
   });
 
   it("handles empty metadata string", () => {
     const entity = makeEntity({ metadata: "" });
     const text = buildEntityText(entity);
-    expect(text).toBe("create_identity | pub fn create_identity(name: &str) -> Identity");
+    expect(text).toBe(
+      "create_identity | pub fn create_identity(name: &str) -> Identity",
+    );
   });
 
   it("returns only name when no signature or doc comments", () => {

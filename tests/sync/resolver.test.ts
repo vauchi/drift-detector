@@ -110,7 +110,10 @@ describe("resolvePlanFile", () => {
     // Slug matches the portion after the date prefix
     const result = await resolvePlanFile(tempRoot, "my-feature");
     expect(result).toBe(
-      join(tempRoot, "_private/docs/planning/todo/2026-01-15-my-feature.plan.md"),
+      join(
+        tempRoot,
+        "_private/docs/planning/todo/2026-01-15-my-feature.plan.md",
+      ),
     );
   });
 
@@ -145,7 +148,10 @@ describe("resolvePlanFile", () => {
 
     const result = await resolvePlanFile(tempRoot, "my-feature");
     expect(result).toBe(
-      join(tempRoot, "_private/docs/planning/todo/2026-01-01-my-feature.plan.md"),
+      join(
+        tempRoot,
+        "_private/docs/planning/todo/2026-01-01-my-feature.plan.md",
+      ),
     );
   });
 });
@@ -231,7 +237,11 @@ describe("resolvePlanFile property tests", () => {
         const dir = await makeTempRoot();
         try {
           const filename = `${date}-${slug}.plan.md`;
-          await createFile(dir, `_private/docs/planning/todo/${filename}`, "# Plan");
+          await createFile(
+            dir,
+            `_private/docs/planning/todo/${filename}`,
+            "# Plan",
+          );
           const result = await resolvePlanFile(dir, slug);
           expect(result).not.toBeNull();
           expect(result!).toContain(slug);

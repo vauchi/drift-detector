@@ -126,14 +126,12 @@ Feature: Auth Feature
       const screenPath = path.join(tempDir, "core", "app_screen.rs");
       const componentPath = path.join(tempDir, "core", "component.rs");
       await fs.mkdir(path.dirname(screenPath), { recursive: true });
-      await fs.mkdir(
-        path.join(tempDir, "_private", "designs", "screens"),
-        { recursive: true },
-      );
-      await fs.mkdir(
-        path.join(tempDir, "_private", "designs", "components"),
-        { recursive: true },
-      );
+      await fs.mkdir(path.join(tempDir, "_private", "designs", "screens"), {
+        recursive: true,
+      });
+      await fs.mkdir(path.join(tempDir, "_private", "designs", "components"), {
+        recursive: true,
+      });
       await fs.writeFile(screenPath, "pub enum AppScreen { Home }");
       await fs.writeFile(componentPath, "pub enum Component { Text }");
 
@@ -1235,8 +1233,8 @@ Feature: Auth Feature
       db.insertEdge(otherId, otherId, "references", 1.0, "explicit");
 
       const items = detectDrift(db, "features", "all");
-      const related = items.filter(
-        (i) => i.message.includes("Future feature not yet built"),
+      const related = items.filter((i) =>
+        i.message.includes("Future feature not yet built"),
       );
       expect(related).toHaveLength(0);
     });

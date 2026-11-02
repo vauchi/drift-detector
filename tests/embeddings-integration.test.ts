@@ -13,7 +13,10 @@
  */
 
 import { describe, it, expect } from "vitest";
-import { OllamaEmbeddingProvider, cosineSimilarity } from "../src/embeddings.js";
+import {
+  OllamaEmbeddingProvider,
+  cosineSimilarity,
+} from "../src/embeddings.js";
 
 const ollamaRunning = !!process.env.OLLAMA_INTEGRATION;
 
@@ -53,9 +56,7 @@ describe.skipIf(!ollamaRunning)("OllamaEmbeddingProvider integration", () => {
     const provider = new OllamaEmbeddingProvider();
 
     const [vecScenario, vecSource, vecUnrelated] = await Promise.all([
-      provider.embed(
-        "User emergency shreds all contact data within 5 seconds",
-      ),
+      provider.embed("User emergency shreds all contact data within 5 seconds"),
       provider.embed(
         "pub fn emergency_shred(storage: &Storage, key: &MasterKey) -> Result<ShredReport>",
       ),

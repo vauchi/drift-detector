@@ -11,7 +11,10 @@
 import fg from "fast-glob";
 import { basename, join } from "node:path";
 
-const PLAN_SEARCH_DIRS = ["_private/docs/planning/todo", "_private/docs/planning/done"];
+const PLAN_SEARCH_DIRS = [
+  "_private/docs/planning/todo",
+  "_private/docs/planning/done",
+];
 
 const PROBLEM_SEARCH_DIR = "_private/docs/problems";
 
