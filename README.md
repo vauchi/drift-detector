@@ -17,26 +17,28 @@ cross-references them to detect:
 
 ## Installation
 
-```bash
-npm install -g @megloff1/drift-detector
-```
-
-Or use directly with npx:
+The package is not published to npm (`"private": true`); build it from
+the clone:
 
 ```bash
-npx @megloff1/drift-detector
+git clone https://gitlab.com/vauchi/utils/drift-detector.git
+cd drift-detector
+npm ci
+npm run build
 ```
+
+In the Vauchi workspace, `just setup` clones it into `utils/drift-detector`.
 
 ## Usage with Claude Code
 
-Add to your project's `.mcp.json`:
+Add to your project's `.mcp.json`, with the path to your clone:
 
 ```json
 {
   "mcpServers": {
     "drift-detector": {
-      "command": "npx",
-      "args": ["-y", "@megloff1/drift-detector"]
+      "command": "node",
+      "args": ["/path/to/drift-detector/dist/index.js"]
     }
   }
 }
@@ -45,7 +47,7 @@ Add to your project's `.mcp.json`:
 Or add globally:
 
 ```bash
-claude mcp add --transport stdio drift-detector -- npx -y @megloff1/drift-detector
+claude mcp add --transport stdio drift-detector -- node /path/to/drift-detector/dist/index.js
 ```
 
 ## MCP Tools

@@ -1,5 +1,6 @@
 {
-  "name": "@megloff1/drift-detector",
+  "name": "@vauchi/drift-detector",
+  "private": true,
   "version": "0.1.0",
   "description": "Cross-layer coherence tool for detecting drift between problem statements, features, tests, code, and documentation",
   "type": "module",
