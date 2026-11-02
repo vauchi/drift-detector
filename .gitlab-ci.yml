@@ -1,0 +1,56 @@
+# SPDX-FileCopyrightText: 2026 Mattia Egloff <mattia.egloff@pm.me>
+# SPDX-License-Identifier: GPL-3.0-or-later
+#
+# The tool's own checks on GitLab's Linux runners, the same ones the
+# workspace pre-push hook runs (vauchi/private#1034): prettier, eslint,
+# the TypeScript build, and the tests on the pinned Node (.nvmrc) and on
+# the oldest Node that package.json's engines field accepts.
+
+stages: [check, test]
+
+.node:
+  tags: [docker]
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:22-bookworm
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+    - if: $CI_COMMIT_TAG
+  variables:
+    npm_config_cache: $CI_PROJECT_DIR/.npm
+  cache:
+    key:
+      files: [package-lock.json]
+    paths: [.npm/]
+  before_script:
+    - npm ci --no-audit --no-fund
+
+fmt:
+  extends: .node
+  stage: check
+  script:
+    - npx prettier --check 'src/**/*.ts' 'tests/**/*.ts'
+
+lint:
+  extends: .node
+  stage: check
+  script:
+    - npm run lint
+
+build:
+  extends: .node
+  stage: check
+  script:
+    - npm run build
+
+test:
+  extends: .node
+  stage: test
+  script:
+    - npm test
+
+test:node20:
+  extends: .node
+  stage: test
+  image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:20-bookworm
+  script:
+    - npm test
