@@ -6,6 +6,12 @@
 # the TypeScript build, and the tests on the pinned Node (.nvmrc) and on
 # the oldest Node that package.json's engines field accepts.
 
+include:
+  - project: 'vauchi/scripts'
+    ref: ci-templates-v2026.11.19
+    file:
+      - '/ci-templates/github-mirror.yml'
+
 stages: [check, test]
 
 .node:
@@ -54,3 +60,6 @@ test:node20:
   image: ${CI_DEPENDENCY_PROXY_GROUP_IMAGE_PREFIX}/node:20-bookworm
   script:
     - npm test
+
+github-mirror:
+  extends: .github-mirror
